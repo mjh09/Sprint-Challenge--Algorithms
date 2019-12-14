@@ -96,28 +96,48 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        c=1
-        while True:
-            c=0
-            # loop through n-1 elements
-            for i in range(0, len(self._list) - 1):
-                cur_index = i
-                smallest_index = cur_index
-        
-                # TO-DO: find next smallest element
-                # (hint, can do in 3 loc) 
-                for j in range(i+1, len(self._list)):
-                    if self._list[cur_index] > self._list[j]:
-                        smallest_index = j
-                        c+=1     
+        def reset():
+            while self.can_move_left() == True:
+                self.move_left()
+                self.set_light_on()
+      
+        def bub():
+            while self.can_move_right()==True:
+                self.swap_item()
+                self.move_right()
+          
+          
+          #if held is greater
+                if self.compare_item()==1:
+                    self.swap_item()
+                    self.move_left()
+                    self.swap_item()
+                    self.move_right()
+                    self.set_light_off()
+             
+          
+          # if held is less
+                if self.compare_item()==-1:
+                    self.move_left()
+                    self.swap_item()
+                    self.move_right()
+            #self.set_light_off()
+            
+                if self.compare_item()==0:
+                    self.swap_item()
+                    self.move_left()
+                    self.swap_item()
+                    self.move_right()
+            
 
-                # TO-DO: swap
-                
-                self._list[cur_index], self._list[smallest_index] = self._list[smallest_index], self._list[cur_index]
-    
-    
-            if c ==0:
-                break
+
+          
+
+        while self.light_is_on() ==False:
+            bub()
+            reset()
+            bub()
+
 
         return self._list
 
